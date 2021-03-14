@@ -1,0 +1,43 @@
+version: "3.9"
+services:
+  web:
+    build: ./
+    image: nginx:latest
+    ports:
+      - "5000:80"
+    volumes:
+      - "./conf:/monirul"
+      - "./conf/fpm:/etc/php/7.3/fpm"
+      - "./conf/nginx:/etc/nginx"
+      - "./logs/nginx:/var/log/nginx"
+      - "../goalplatforms:/var/www/html"
+    tty: true
+    networks:
+      - frontend
+  mysql:
+    container_name: mysql_server
+    image: mysql
+    command: --default-authentication-plugin=mysql_native_password
+    volumes:
+      - "./data-dir:/var/lib/mysql:rw"
+    tty: true
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: example
+    networks:
+    - backend
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 5001:8080
+    networks:
+      - backend
+networks:
+  frontend:
+    # Use a custom driver
+    driver: bridge
+  backend:
+    # Use a custom driver which takes special options
+    driver: bridge
