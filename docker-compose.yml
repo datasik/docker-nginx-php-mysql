@@ -13,7 +13,7 @@ services:
       - "../goalplatforms:/var/www/html"
     tty: true
     networks:
-      - frontend
+      - backend
   mysql:
     container_name: mysql_server
     image: mysql
