@@ -35,9 +35,6 @@ services:
     networks:
       - backend
 networks:
-  frontend:
-    # Use a custom driver
-    driver: bridge
   backend:
     # Use a custom driver which takes special options
     driver: bridge
